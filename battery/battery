@@ -1,0 +1,15 @@
+#!/bin/env sh
+
+## GETTING BATTERY INFORMATION ##
+red='\033[0;31m'
+normal='\033[0m'
+battery=$(acpi | awk '{print $4}' |  sed 's/[,%]//g')
+state=$(acpi | awk '{print $3}' | sed 's/[,]//g')
+
+#echo $battery
+
+if [[ battery -lt 25 ]] && [[ state -ne 'Charging' ]]
+then
+  echo -e "${red}ATENÇÃO${normal}: Nível da bateria baixo: ${red}${battery}%${normal}, coloque para carregar"
+fi
+
